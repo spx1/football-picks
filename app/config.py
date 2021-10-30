@@ -7,6 +7,7 @@ class BaseConfig(object):
     DEBUG = False
     TESTING = False
     SQLALCHEMY_DATABASE_URI = f'sqlite:///{BASE_DIRECTORY}/db/app.db'
+    SECRET_KEY = 'lajfddlkfjlkj420ijlkdjfal28492040'
 
 class TestConfig(BaseConfig):
     NAME = 'Test'
