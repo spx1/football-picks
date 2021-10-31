@@ -2,10 +2,14 @@ from flask import Flask, Blueprint, render_template, redirect, url_for
 from app import STATIC_DIRECTORY, TEMPLATE_DIRECTORY, BASE_URL
 from . import APP_NAME
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, RadioField
 
 class NameForm(FlaskForm):
     name = StringField('What is your name?')
+    submit = SubmitField('Submit')
+
+class GameForm(FlaskForm):
+    game = RadioField(label='Game 1',choices=['Kansas City Chiefs','None', 'New York Giants'],)
     submit = SubmitField('Submit')
 
 api = Blueprint(
@@ -18,11 +22,11 @@ api = Blueprint(
 
 @api.route('/', methods=['GET','POST'])
 def index():
-    form = NameForm()
+    form = GameForm()
     message = ""
     if form.validate_on_submit():
-        name = form.name.data
-        message = f'Hello {name}'
+        selected = form.game.data
+        message = f'You selected {selected}'
 
     return render_template('index.html', form=form, message=message)
 
