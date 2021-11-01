@@ -10,6 +10,12 @@ BASE_URL = '/app'
 TEMPLATE_DIRECTORY = f'{BASE_DIRECTORY}/templates'
 STATIC_DIRECTORY = f'{BASE_DIRECTORY}/static'
 
+def init_app():
+    print('Initializing Applications')
+    from .picks.service import init_app as picks
+    picks()
+    
+
 def create_app(env=None) -> Flask:
     '''Create the Flask application and bind the sqlalchemy objects'''
     from app.config import config_by_name
@@ -26,6 +32,7 @@ def create_app(env=None) -> Flask:
     @database_cli.command('init')
     def init_database():
         db.create_all()
+        init_app()
 
     app.cli.add_command(database_cli)
     return app
